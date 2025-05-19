@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ScrGame implements Screen {
     //public static final float WWIDTH = 16, WHEIGHT = 9;
+    private int count;
     private Main main;
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -36,7 +37,7 @@ public class ScrGame implements Screen {
 
     DynamicBodyCircle[] rocks = new DynamicBodyCircle[3];
     DynamicBodyCircle[] aliens = new DynamicBodyCircle[2];
-    DynamicBodyBox[] boxes = new DynamicBodyBox[1];
+    DynamicBodyBox[] boxes = new DynamicBodyBox[3];
     public Body bodyTouched;
 
 
@@ -56,18 +57,18 @@ public class ScrGame implements Screen {
         world = new World(new Vector2(0, -15f), true);
         renderer = new Box2DDebugRenderer();
         touch = new Vector3();
+        count = aliens.length;
         Gdx.input.setInputProcessor(new MyInputProcessor());
         for (int i = 0; i<rocks.length; i++){
-            rocks[i] = new DynamicBodyCircle(world, 100+i*50, 200, 12f, "rock" + i);
+            rocks[i] = new DynamicBodyCircle(world, 100+i*50, 120, 12f, "rock" + i);
         }
-        for (int i = 0; i<aliens.length; i++){
-            aliens[i] = new DynamicBodyCircle(world, 800+i*50, 200, 8f, "alien" + i);
-        }
-        for (int i = 0; i<boxes.length; i++){
-            boxes[i] = new DynamicBodyBox(world, 790, 150, 200f, 40f, "boardSafe");
-        }
+        aliens[0] = new DynamicBodyCircle(world, 820, 200, 8f, "alien0");
+        aliens[1] = new DynamicBodyCircle(world, 760, 200, 8f, "alien1");
+        boxes[0] = new DynamicBodyBox(world, 790, 150, 200f, 40f, "boardSafe");
+        boxes[1] = new DynamicBodyBox(world, 860, 250, 20f, 100f, "board");
+        boxes[2] = new DynamicBodyBox(world, 720, 250, 20f, 100f, "board");
         StaticBody floor = new StaticBody(world, SCR_WIDTH/2, 40, 1800f, 100f);
-        StaticBody floor2 = new StaticBody(world, 0, 130, 500f, 100f);
+        StaticBody floor2 = new StaticBody(world, 0, 60, 500f, 100f);
         StaticBody wall1 = new StaticBody(world, 20, SCR_HEIGHT/2, 50f, 950f);
         StaticBody wall2 = new StaticBody(world, SCR_WIDTH-20, SCR_HEIGHT/2, 50f, 950f);
 
@@ -132,6 +133,7 @@ public class ScrGame implements Screen {
         batch.begin();
         batch.draw(img, 0 , 0, SCR_WIDTH, SCR_HEIGHT);
         font.draw(batch, "LEVEL 1", 400, 800);
+        font.draw(batch, "Alien count: " + count, 700, 800);
         bBack.f.draw(batch, bBack.text, bBack.x, bBack.y);
         batch.end();
         renderer.render(world, camera.combined);
@@ -141,6 +143,7 @@ public class ScrGame implements Screen {
             if (aliens[i] != null && aliens[i].isDead){
                 world.destroyBody(aliens[i].body);
                 aliens[i]=null;
+                count--;
             }
         }
     }

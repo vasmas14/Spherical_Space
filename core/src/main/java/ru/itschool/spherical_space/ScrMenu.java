@@ -22,7 +22,6 @@ public class ScrMenu implements Screen {
 
     Button bPlay;
     Button bSettings;
-    Button bLeaderboard;
     Button bAbout;
     Button bQuit;
 
@@ -34,8 +33,7 @@ public class ScrMenu implements Screen {
         font = main.font;
         img = new Texture("bg1.jpg");
         bPlay = new Button(font, ">Play", 20, 700);
-        bSettings = new Button(font, ">Settings", 20, 500);
-        bLeaderboard = new Button(font, ">Leaderboard", 20, 300);
+        bSettings = new Button(font, ">Settings", 20, 400);
         bAbout = new Button(font, ">About", 20, 100);
         bQuit = new Button(font, ">Quit game", 1150, 50);
     }
@@ -56,9 +54,6 @@ public class ScrMenu implements Screen {
             if (bSettings.hit(touch.x, touch.y)){
                 main.setScreen(main.scrSettings);
             }
-            if (bLeaderboard.hit(touch.x, touch.y)){
-                main.setScreen(main.scrLeaderboard);
-            }
             if (bAbout.hit(touch.x, touch.y)){
                 main.setScreen(main.scrAbout);
             }
@@ -73,7 +68,6 @@ public class ScrMenu implements Screen {
         font.draw(batch, "MAIN MENU", 650, 800);
         bPlay.f.draw(batch, bPlay.text, bPlay.x, bPlay.y);
         bSettings.f.draw(batch, bSettings.text, bSettings.x, bSettings.y);
-        bLeaderboard.f.draw(batch, bLeaderboard.text, bLeaderboard.x, bLeaderboard.y);
         bAbout.f.draw(batch, bAbout.text, bAbout.x, bAbout.y);
         bQuit.f.draw(batch, bQuit.text, bQuit.x, bQuit.y);
         batch.end();

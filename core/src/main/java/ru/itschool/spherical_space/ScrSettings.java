@@ -29,7 +29,7 @@ public class ScrSettings implements Screen {
         touch = main.touch;
         font = main.font;
         img = new Texture("bg2.jpg");
-        bBack = new Button(font, "X", 870, 900);
+        bBack = new Button(font, "X", 1375, 900);
     }
 
     @Override

@@ -36,7 +36,6 @@ public class Main extends Game {
         scrMenu = new ScrMenu(this);
         scrGame = new ScrGame(this);
         scrSettings = new ScrSettings(this);
-        scrLeaderboard = new ScrLeaderboard(this);
         scrAbout = new ScrAbout(this);
         setScreen(scrMenu);
     }
