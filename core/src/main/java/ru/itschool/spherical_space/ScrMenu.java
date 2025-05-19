@@ -33,11 +33,11 @@ public class ScrMenu implements Screen {
         touch = main.touch;
         font = main.font;
         img = new Texture("bg1.jpg");
-        bPlay = new Button(font, "Play", 400, 1200);
-        bSettings = new Button(font, "Settings", 330, 1000);
-        bLeaderboard = new Button(font, "Leaderboard", 275, 800);
-        bAbout = new Button(font, "About", 380, 600);
-        bQuit = new Button(font, "Quit game", 330, 400);
+        bPlay = new Button(font, ">Play", 20, 700);
+        bSettings = new Button(font, ">Settings", 20, 500);
+        bLeaderboard = new Button(font, ">Leaderboard", 20, 300);
+        bAbout = new Button(font, ">About", 20, 100);
+        bQuit = new Button(font, ">Quit game", 1150, 50);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ScrMenu implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(img, 0 , 0, SCR_WIDTH, SCR_HEIGHT);
-        font.draw(batch, "MAIN MENU", 320, 1500);
+        font.draw(batch, "MAIN MENU", 650, 800);
         bPlay.f.draw(batch, bPlay.text, bPlay.x, bPlay.y);
         bSettings.f.draw(batch, bSettings.text, bSettings.x, bSettings.y);
         bLeaderboard.f.draw(batch, bLeaderboard.text, bLeaderboard.x, bLeaderboard.y);

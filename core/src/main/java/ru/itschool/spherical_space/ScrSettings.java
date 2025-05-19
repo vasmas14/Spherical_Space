@@ -29,7 +29,7 @@ public class ScrSettings implements Screen {
         touch = main.touch;
         font = main.font;
         img = new Texture("bg2.jpg");
-        bBack = new Button(font, "X", 870, 1600);
+        bBack = new Button(font, "X", 870, 900);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ScrSettings implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(img, 0 , 0, SCR_WIDTH, SCR_HEIGHT);
-        font.draw(batch, "GAME", 400, 1500);
+        font.draw(batch, "Settings", 400, 800);
         bBack.f.draw(batch, bBack.text, bBack.x, bBack.y);
         batch.end();
     }
