@@ -24,8 +24,11 @@ public class Main extends Game {
     ScrMenu scrMenu;
     ScrGame scrGame;
     ScrSettings scrSettings;
-    ScrLeaderboard scrLeaderboard;
     ScrAbout scrAbout;
+    Level2 level2;
+    Level3 level3;
+    Level4 level4;
+    Level5 level5;
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -37,6 +40,10 @@ public class Main extends Game {
         scrGame = new ScrGame(this);
         scrSettings = new ScrSettings(this);
         scrAbout = new ScrAbout(this);
+        level2 = new Level2(this);
+        level3 = new Level3(this);
+        level4 = new Level4(this);
+        level5 = new Level5(this);
         setScreen(scrMenu);
     }
 

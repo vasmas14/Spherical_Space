@@ -25,7 +25,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Level2 implements Screen {
+public class Level5 implements Screen {
     //public static final float WWIDTH = 16, WHEIGHT = 9;
     private int count;
     private Main main;
@@ -36,10 +36,11 @@ public class Level2 implements Screen {
     private World world;
     private Box2DDebugRenderer renderer;
 
-    DynamicBodyCircle[] rocks = new DynamicBodyCircle[2];
-    DynamicBodyCircle[] aliens = new DynamicBodyCircle[3];
-    DynamicBodyBox[] boxes = new DynamicBodyBox[4];
+    DynamicBodyCircle[] rocks = new DynamicBodyCircle[3];
+    DynamicBodyCircle[] aliens = new DynamicBodyCircle[7];
+    DynamicBodyBox[] boxes = new DynamicBodyBox[20];
     public Body bodyTouched;
+
     Texture textureAtlas;
     TextureRegion imgrock1;
     Texture textureAtlas2;
@@ -47,7 +48,6 @@ public class Level2 implements Screen {
     Texture textureAtlas3;
     TextureRegion imgalien;
     TextureRegion imgrock3;
-
     Texture img;
     Button bBack;
     Button bNext;
@@ -55,7 +55,8 @@ public class Level2 implements Screen {
     StaticBody floor2;
     StaticBody wall1;
     StaticBody wall2;
-    public Level2(Main main) {
+    StaticBody floor3;
+    public Level5(Main main) {
         this.main = main;
         batch = main.batch;
         camera = main.camera;
@@ -63,7 +64,7 @@ public class Level2 implements Screen {
         font = main.font;
         img = new Texture("bg2.jpg");
         bBack = new Button(font, "X", 1375, 900);
-        bNext = new Button(font, ">Next level", 700, 450);
+        bNext = new Button(font, ">Back to Main Menu", 700, 650);
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         Box2D.init();
         world = new World(new Vector2(0, -15f), true);
@@ -77,16 +78,33 @@ public class Level2 implements Screen {
         imgrock2 = new TextureRegion(textureAtlas2, 0, 0, 100, 100);
         imgrock3 = new TextureRegion(textureAtlas2, 0, 0, 600, 300);
         imgalien = new TextureRegion(textureAtlas3, 0, 0, 160, 160);
-        for (int i = 0; i<rocks.length; i++){
+        for (int i = 0; i<2; i++){
             rocks[i] = new DynamicBodyCircle(world, 100+i*50, 140, 12f, "rock" + i);
         }
-        aliens[0] = new DynamicBodyCircle(world, 820, 100, 8f, "alien0");
-        aliens[1] = new DynamicBodyCircle(world, 760, 100, 8f, "alien1");
-        aliens[2] = new DynamicBodyCircle(world, 500, 650, 8f, "alien2");
-        boxes[0] = new DynamicBodyBox(world, 500, 350, 15f, 500f, "board");
-        boxes[1] = new DynamicBodyBox(world, 500, 620, 100f, 20f, "boardSafe");
-        boxes[2] = new DynamicBodyBox(world, 1200, 250, 100f, 20f, "board");
-        boxes[3] = new DynamicBodyBox(world, 1330, 250, 30f, 300f, "board");
+        rocks[2] = new DynamicBodyCircle(world, 1250, 260, 12f, "rock2");
+        aliens[0] = new DynamicBodyCircle(world, 400, 100, 8f, "alien0");
+        aliens[1] = new DynamicBodyCircle(world, 900, 350, 8f, "alien1");
+        aliens[2] = new DynamicBodyCircle(world, 550, 100, 8f, "alien2");
+        aliens[3] = new DynamicBodyCircle(world, 650, 100, 8f, "alien3");
+        aliens[4] = new DynamicBodyCircle(world, 600, 280, 8f, "alien4");
+        aliens[5] = new DynamicBodyCircle(world, 470, 100, 8f, "alien5");
+        aliens[6] = new DynamicBodyCircle(world, 750, 100, 8f, "alien6");
+        boxes[0] = new DynamicBodyBox(world, 360, 150, 10f, 100f, "board");
+        boxes[1] = new DynamicBodyBox(world, 400, 230, 100f, 10f, "boardSafe");
+        boxes[2] = new DynamicBodyBox(world, 440, 150, 10f, 100f, "board");
+        boxes[3] = new DynamicBodyBox(world, 900, 200, 15f, 180f, "board");
+        boxes[4] = new DynamicBodyBox(world, 900, 300, 100f, 15f, "boardSafe");
+        boxes[5] = new DynamicBodyBox(world, 1200, 100, 200f, 40f, "board");
+        boxes[6] = new DynamicBodyBox(world, 510, 150, 10f, 120f, "board");
+        boxes[7] = new DynamicBodyBox(world, 600, 250, 200f, 10f, "board");
+        boxes[8] = new DynamicBodyBox(world, 690, 150, 10f, 120f, "board");
+        boxes[9] = new DynamicBodyBox(world, 550, 300, 10f, 80f, "board");
+        boxes[10] = new DynamicBodyBox(world, 600, 370, 120f, 10f, "boardSafe");
+        boxes[11] = new DynamicBodyBox(world, 650, 300, 12f, 80f, "board");
+        boxes[12] = new DynamicBodyBox(world, 400, 300, 12f, 115f, "board");
+        boxes[13] = new DynamicBodyBox(world, 500, 400, 220f, 10f, "board");
+        boxes[14] = new DynamicBodyBox(world, 600, 270, 25f, 10f, "boardSafe");
+        floor3 = new StaticBody(world, 1400, 200, 500f, 100f);
         floor = new StaticBody(world, SCR_WIDTH/2, 40, 1800f, 100f);
         floor2 = new StaticBody(world, 0, 60, 500f, 100f);
         wall1 = new StaticBody(world, 20, SCR_HEIGHT/2, 50f, 950f);
@@ -106,6 +124,9 @@ public class Level2 implements Screen {
                     Object userDataB = bodyB.getUserData();
                     for (int i=0; i<aliens.length; i++){
                         if ((userDataA.equals("alien"+ i) && userDataA.equals("board")) || (userDataB.equals("alien" + i) && userDataA.equals("board"))){
+                            aliens[i].isDead = true;
+                        }
+                        if ((userDataA.equals("alien"+ i) && userDataA.equals("circle")) || (userDataB.equals("alien" + i) && userDataA.equals("circle"))){
                             aliens[i].isDead = true;
                         }
                         for (int j=0; j<rocks.length; j++){
@@ -144,7 +165,7 @@ public class Level2 implements Screen {
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touch);
             if (bNext.hit(touch.x, touch.y)){
-                main.setScreen(main.level3);
+                main.setScreen(main.scrMenu);
             }
             if (bBack.hit(touch.x, touch.y)){
                 main.setScreen(main.scrMenu);
@@ -153,12 +174,12 @@ public class Level2 implements Screen {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
         batch.draw(img, 0 , 0, SCR_WIDTH, SCR_HEIGHT);
-        font.draw(batch, "LEVEL 2", 400, 800);
+        font.draw(batch, "LEVEL 5", 400, 800);
         font.draw(batch, "Alien count: " + count, 700, 800);
         bBack.f.draw(batch, bBack.text, bBack.x, bBack.y);
         if (count==0){
-             font.draw(batch, "LEVEL CLEARED!", 700, 500);
-             bNext.f.draw(batch, bNext.text, bNext.x, bNext.y);
+            font.draw(batch, "YOU WON!", 700, 700);
+            bNext.f.draw(batch, bNext.text, bNext.x, bNext.y);
         }
         batch.end();
         renderer.render(world, camera.combined);
@@ -180,6 +201,8 @@ public class Level2 implements Screen {
         }
         batch.draw(imgrock3, floor2.getX(), floor2.getY(), floor2.getW()/2, floor2.getH()/2,
             floor2.getW(), floor2.getH(), 1, 1, floor2.getR());
+        batch.draw(imgrock3, floor3.getX(), floor3.getY(), floor3.getW()/2, floor3.getH()/2,
+            floor3.getW(), floor3.getH(), 1, 1, floor3.getR());
         batch.draw(imgrock3, floor.getX(), floor.getY(), floor.getW()/2, floor.getH()/2,
             floor.getW(), floor.getH(), 1, 1, floor.getR());
         batch.draw(imgrock3, wall1.getX(), wall1.getY(), wall1.getW()/2, wall1.getH()/2,
@@ -195,8 +218,8 @@ public class Level2 implements Screen {
                 count--;
             }
         }
-        if (main.level2==main.getScreen()){
-            Gdx.input.setInputProcessor(new MyInputProcessor2());
+        if (main.level5==main.getScreen()){
+            Gdx.input.setInputProcessor(new MyInputProcessor3());
         }
     }
 
@@ -225,7 +248,7 @@ public class Level2 implements Screen {
 
     }
 
-    class MyInputProcessor2 implements InputProcessor{
+    class MyInputProcessor3 implements InputProcessor{
         Vector3 touchDown = new Vector3();
         Vector3 touchUp = new Vector3();
         @Override
@@ -245,7 +268,7 @@ public class Level2 implements Screen {
 
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            if (main.level2==main.getScreen()){
+            if (main.level5==main.getScreen()){
                 touchDown.set(screenX, screenY, 0);
                 camera.unproject(touchDown);
                 bodyTouched = null;
@@ -292,3 +315,4 @@ public class Level2 implements Screen {
         }
     }
 }
+

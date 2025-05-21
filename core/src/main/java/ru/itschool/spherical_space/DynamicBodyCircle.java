@@ -1,5 +1,6 @@
 package ru.itschool.spherical_space;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,7 +12,8 @@ public class DynamicBodyCircle {
     public float x, y;
     public float radius;
     Body body;
-    public boolean isDead;
+    public boolean isDead = false;
+    public boolean isTouched = false;
 
     public DynamicBodyCircle(World world, float x, float y, float radius, String name) {
         this.x = x;
@@ -42,5 +44,21 @@ public class DynamicBodyCircle {
         x = body.getPosition().x;
         y = body.getPosition().y;
         return (t.x-x)*(t.x-x) + (t.y-y)*(t.y-y) < radius*radius;
+    }
+
+    public float getX(){
+        return body.getPosition().x - radius;
+    }
+    public float getY(){
+        return body.getPosition().y - radius;
+    }
+    public float getW(){
+        return radius*2;
+    }
+    public float getH(){
+        return radius*2;
+    }
+    public float getR(){
+        return body.getAngle()* MathUtils.radiansToDegrees;
     }
 }
